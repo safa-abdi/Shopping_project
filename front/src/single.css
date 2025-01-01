@@ -1,0 +1,92 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* align cards to the left */
+  }
+  
+  .cardsss {
+    width: 350px;
+    height: 470px; /* hauteur définie pour les cartes */
+    margin: 10px;
+    background-color: white;
+    border-radius: 15px;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(143, 136, 136);
+    margin-left: 80px;
+  }
+  
+  .card-imggg img {
+    width: 345px;
+    height: 465px; /* hauteur définie pour les images */
+    object-fit: cover; /* pour remplir la zone de l'image */
+    border-radius: 10px 10px 0px 0px;
+  }
+  
+  .card-body {
+    flex: 1; /* pour que le corps de la carte remplisse l'espace restant */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* pour mettre l'auteur en bas */
+    padding: 7px;
+  }
+  
+  .card-body h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .card-body p {
+    text-align: justify;
+    margin-bottom: 10px;
+  }
+  
+  .card-body b {
+    text-align: center;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-footer button {
+    width: 150px;
+    background: rgb(139, 133, 133);
+    color: white;
+    border-radius: 15px;
+    border: 2px solid rgb(143, 136, 136);
+    padding: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.2s;
+  }
+  
+  .card-footer button:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+  }
+  
+  .cards:hover {
+    box-shadow: 3.9px 7.8px 7.8px hsl(0deg 0% 0% / 0.38);
+  }
+  
+  .cards {
+    flex: 1 0 calc(25% - 20px);
+    margin: 10px;
+    background-color: white;
+    border-radius: 15px;
+    transition: 0.2s;
+  }
+  
+  .container > .cards {
+    max-width: calc(25% - 20px); /* largeur maximale pour chaque carte */
+  }
+  .im{
+    width: 250px;
+    height: 200px;
+  }

@@ -1,0 +1,128 @@
+.page{
+  background-image:url("./images/11.jpg");
+  
+  position: relative;
+   background-repeat: no-repeat;
+   background-size: cover; 
+}
+
+  .bg {
+    background-image:url("./images/11.jpg");
+  
+   position: relative;
+    background-repeat: no-repeat;
+    background-size: cover; 
+
+    
+  }
+
+
+  .bg1 {
+    background-image:url("./images/flat-lay-books-with-copy-space.jpg");
+    
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: cover;  
+
+  } 
+
+  .custom-border {
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
+
+.bg3{
+  
+    background-image:url("./images/colorful-books-with-copy-space.jpg");
+   
+    position: relative;
+    
+    background-repeat: no-repeat;
+    background-size: cover; 
+
+
+}
+
+.f{
+  border: 2px solid black;
+}
+i{}
+.eroor{
+  color: red;
+  font-size: 12px;
+}
+  .product{
+    color: black;
+    font-size: 18px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    
+  }
+  .nEcrii{
+font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+font-size: 30px;
+  }
+  .des{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+  }
+  .boo{
+    font-size: 35px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  .b{
+    font-size: 45px;
+    font-family:cursive;
+    color: rgb(240, 240, 240);
+  }
+  .sp{
+    color:rgb(53, 59, 221)
+  }
+  .fw{
+    font-family: cursive;
+  }
+  .rn{
+    color:rgb(135, 154, 193);
+    font-size: 15px;;
+  }
+  .bt{
+    background-color: lightskyblue;
+    border: 3px solid #e9ecef;
+ 
+    border-radius: 8px;
+  }
+  .t2{
+    font-family: cursive;
+    font-size: 35px;
+    color: whitesmoke;
+  }
+  /* Style for input fields with icons */
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon input {
+  padding-left: 30px; /* Adjust padding as needed */
+}
+
+.input-icon {
+  position: absolute;
+  left: 10px; /* Adjust position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Style for the "Sign In" button */
+.btn11 {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.btn11:hover {
+  background-color: #0056b3;
+}

@@ -1,0 +1,91 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; 
+  }
+  
+  .cardss {
+    width: 380px;
+    height: 450px; 
+    margin: 10px;
+    background-color: white;
+    border-radius: 15px;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgb(143, 136, 136);
+  }
+  
+  .card-imgg img {
+    width: 260px;
+    height: 390px; /* hauteur définie pour les images */
+    object-fit: cover; /* pour remplir la zone de l'image */
+    border-radius: 10px 10px 0px 0px;
+  }
+  
+  .card-bodyy {
+    flex: 1; /* pour que le corps de la carte remplisse l'espace restant */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* pour mettre l'auteur en bas */
+    padding: 7px;
+  }
+  
+  .card-body h2 {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .card-body p {
+    text-align: justify;
+    margin-bottom: 10px;
+  }
+  
+  .card-body b {
+    text-align: center;
+  }
+  
+  .card-footerr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-footerr button {
+    width: 150px;
+    background: rgb(108, 169, 175);
+    color: rgb(224, 222, 222);
+    border-radius: 15px;
+    border: 2px solid rgb(132, 193, 200);
+    padding: 6px;
+    font-size: 17px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    transition: 0.2s;
+  }
+  
+  .card-footerr button:hover {
+    background-color: rgb(235, 223, 223);
+    color: black;
+    border: 2px solid black;
+  }
+  
+  .cardss:hover {
+    box-shadow: 3.9px 7.8px 7.8px hsl(0deg 0% 0% / 0.38);
+  }
+  
+  .cardss {
+    flex: 1 0 calc(25% - 20px);
+    margin: 10px;
+    background-color: white;
+    border-radius: 15px;
+    transition: 0.2s;
+  }
+  
+  .container > .cardss {
+    max-width: calc(25% - 20px); /* largeur maximale pour chaque carte */
+  }
+  .im{
+    width: 250px;
+    height: 150px;
+  }

@@ -3,7 +3,6 @@ import SideMenuEcrivain from "./Components/sideMenuEcrivain";
 import AppHeaderEcrivain from "./Components/App HeaderEcrivain";
 import { useState, useEffect, useRef } from "react";
 import { Bar } from "react-chartjs-2"; // Import Chart.js
-import axios from "axios"; // Import axios for API calls
 import { Chart, registerables } from 'chart.js'; // Import Chart.js and registerables
 import img1 from "./assets/b3.jpg";
 import img2 from "./assets/b1.jpg";

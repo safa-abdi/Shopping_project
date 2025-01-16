@@ -4,65 +4,47 @@ var utilisateurs=require('../models/utilisateur')
 
 
 var design=require('../models/design')
-// api ajout commentaire
-exports.create = async(req,res)=>{
-    // validate request
-    if(!req.body){
-        res.status(400).send({ message : "Content can not be emtpy!"});
-        return;
+
+
+exports.create = async (req, res) => {
+    if (!req.body || !req.body.comment || !req.body.produit || !req.body.emetteur || !req.body.date) {
+        return res.status(400).send({ message: "Content can not be empty!" });
     }
 
-    // new user
-    const commentaire = new commentairedb({
-        comment : req.body.comment,
-        produit : req.body.produit,
-        emetteur:req.body.emetteur,
-        date:req.body.date
-  
-        
-    })
-    commentaire.utilisateur = req.body.utilisateur
-    
-    await utilisateurs.updateOne(
-        { _id:req.body.utilisateur},
-         {
-             $addToSet: { commentaires: commentaire._id },
-           },
-           { new: true }
- 
-       ),
-       commentaire.design = req.body.design
-
-    
-    await design.updateOne(
-        { _id:req.body.design},
-         {
-             $addToSet: { commentairess: commentaire._id },
-           },
-           { new: true }
- 
-       )
-    // save comment in the database
-    commentaire
-        .save(commentaire)
-        .then(data => {
-            res.status(200).send({
-                Commentaire: data,
-                msg: "enregistrer avec succes",
-              });
-           
-        })
-       
-        
-        
- 
-        .catch(err =>{
-            return res.status(500).send({
-                message : err.message || "Some error occurred while creating a create operation"
-            });
+    try {
+        const commentaire = new commentairedb({
+            comment: req.body.comment,
+            produit: req.body.produit,
+            emetteur: req.body.emetteur,
+            date: req.body.date,
+            utilisateur: req.body.utilisateur,
+            design: req.body.design
         });
 
-}
+        await utilisateurs.updateOne(
+            { _id: req.body.utilisateur },
+            { $addToSet: { commentaires: commentaire._id } },
+            { new: true }
+        );
+
+        await design.updateOne(
+            { _id: req.body.design },
+            { $addToSet: { commentairess: commentaire._id } },
+            { new: true }
+        );
+
+        const savedCommentaire = await commentaire.save();
+        return res.status(200).send({
+            Commentaire: savedCommentaire,
+            msg: "Enregistré avec succès"
+        });
+    } catch (err) {
+        return res.status(500).send({
+            message: err.message || "Une erreur est survenue lors de la création du commentaire"
+        });
+    }
+};
+
 
 
 //api find all comments
@@ -98,26 +80,26 @@ exports.find = (req, res)=>{
 
 
 //update comment
-exports.update = (req, res)=>{
-    if(!req.body){
-        return res
-            .status(400)
-            .send({ message : "Data to update can not be empty"})
+exports.update = (req, res) => {
+    if (!req.body) {
+        return res.status(400).send({ message: "Data to update cannot be empty" });
     }
 
     const id = req.params.id;
-    commentairedb.findByIdAndUpdate(id, req.body, { useFindAndModify: false})
+    // Utilisez { new: true } pour renvoyer l'objet mis à jour
+    commentairedb.findByIdAndUpdate(id, req.body, { new: true, useFindAndModify: false })
         .then(data => {
-            if(!data){
-                res.status(404).send({ message : `Cannot Update user with ${id}. Maybe user not found!`})
-            }else{
-                res.send(data)
+            if (!data) {
+                return res.status(404).send({ message: `Cannot update comment with ID ${id}. Maybe comment not found!` });
             }
+            // Assurez-vous que le message et les données sont renvoyés
+            return res.status(200).send(data); 
         })
-        .catch(err =>{
-            res.status(500).send({ message : "Error Update user information"})
-        })
-}
+        .catch(err => {
+            return res.status(500).send({ message: "Error updating comment information" });
+        });
+};
+
 
 
 //delete commentaire

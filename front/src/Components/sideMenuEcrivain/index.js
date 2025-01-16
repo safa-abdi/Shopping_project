@@ -23,13 +23,12 @@ import {
          
         <Menu
         
-          className="SideMenuVerticalE"
-          mode="vertical"
-          onClick={(item) => {
-            //item.key
-            navigate(item.key);
-          }}
-          
+        className="SideMenuVerticalE"
+        mode="vertical"
+        onClick={(item) => {
+          setSelectedKeys(item.key); // Update the selectedKeys state on click
+          navigate(item.key); // Navigate to the corresponding route
+        }}
           selectedKeys={[selectedKeys]}
           
           items={[

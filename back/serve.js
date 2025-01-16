@@ -5,14 +5,14 @@ const bodyParser = require('body-parser')
 const d=require('./models/design')
 const app =express();
 const contactRoutes = require('./routes/contact');
-// Importez le middleware cors
+
 app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:3001', // Autoriser les requêtes depuis http://localhost:3000
+  origin: 'http://localhost:3001', 
   methods: 'GET,POST,PUT,DELETE',
 }));
 app.listen(3000 , 'localhost',()=>{
-    console.log('Application connected sur le port 3001...');
+    console.log('Application connected sur le port 3000...');
 });
 
 mongoConnection();
@@ -23,6 +23,7 @@ app.use('/' , require('./routes/commandeRouter'))
 app.use('/api',contactRoutes)
 app.use('/' , require('./routes/designRouter'))
 app.use('/' , require('./routes/utilisateurRouter'))
+
 app.use(bodyParser.urlencoded({extended : true}))
 app.use(bodyParser.json())
 
@@ -39,4 +40,5 @@ app.use((req, res, next) => {
 
 
 
+module.exports = app; 
 

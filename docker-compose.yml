@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Frontend Service
+  frontend:
+    build:
+      context: ./front
+    ports:
+      - "3001:3001"
+    environment:
+      - REACT_APP_API_URL=http://backend:3000 
+    networks:
+      - graffiti1_network
+
+  # Backend Service (Node/Backend)
+  backend:
+    build:
+      context: ./back
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGODB_URL=mongodb://127.0.0.1:27017/graffiti  
+    networks:
+      - graffiti1_network
+    depends_on:
+      - mongodb
+
+  # MongoDB Service
+  mongodb:
+    image: mongo:6-jammy  
+    ports:
+      - "27017:27017"  
+    volumes:
+      - dbdata6:/data/db  
+    networks:
+      - graffiti1_network  
+
+
+volumes:
+  dbdata6:
+
+networks:
+  graffiti1_network:
+    driver: bridge  

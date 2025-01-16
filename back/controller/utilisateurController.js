@@ -1,86 +1,68 @@
-var utilisateur = require('../models/utilisateur')
-const bcrypt = require("bcrypt");
+const utilisateur = require('../models/utilisateur');
+const bcrypt = require('bcryptjs');
+const validator = require('validator');
 
-
-// api ajout user
-exports.create =   async (req, res)=>{
-    // validate request
-    if(!req.body){
-        res.status(400).send({ message : "Content can not be emtpy!"});
-        return;
+exports.create = async (req, res) => {
+    try {
+      const { nom, prenom, email, motDePasse, tel } = req.body;
+      
+      if (!nom || !prenom || !email || !motDePasse || !tel) {
+        return res.status(400).send({ message: 'Tous les champs sont requis' });
+      }
+  
+      const newUser = new utilisateur({
+        nom,
+        prenom,
+        email,
+        motDePasse,
+        tel
+      });
+  
+      // Sauvegarde dans la base de données
+      await newUser.save();
+  
+      res.status(200).send({
+        msg: 'enregistrer avec succes',
+        user: newUser
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: `Erreur de base de données: ${error.message}`
+      });
     }
-    // new user
-    const user = new utilisateur({
-        nom : req.body.nom,
-        prenom : req.body.prenom,
-        email:req.body.email,
-        motDePasse:req.body.motDePasse,
-        
-        role:"Client",
-        tel:req.body.tel
-        
-    })
-    const salt = 10;
-    const gensalt = await bcrypt.genSalt(salt);
-    const hashedPassword = await  bcrypt.hash(user.motDePasse, gensalt);
-    user.motDePasse=hashedPassword;
-
-    // save user in the database
-   user
-        .save(user)
-        .then(data => {
-            res.status(200).send({
-                Commande: data,
-                msg: "enregistrer avec succes",
-              });
-           
-        })
-        .catch(err =>{
-            return res.status(500).send({
-                message : err.message || "Some error occurred while creating a create operation"
-            });
-        });
-
-
-       
-        
-
-}
- //api select all users
-exports.find = (req, res)=>{
-
-    if(req.query.id){
+  };
+  
+exports.find = (req, res) => {
+    if (req.query.id) {
         const id = req.query.id;
-
         utilisateur.findById(id)
-            .then(data =>{
-                if(!data){
-                    res.status(404).send({ message : "Not found commande with id "+ id})
-                }else{
-                    res.send(data)
+            .then(data => {
+                if (!data) {
+                    return res.status(404).send({ message: `Utilisateur non trouvé avec l'ID ${id}` });
                 }
-            })
-            .catch(err =>{
-                res.status(500).send({ message: "Erro retrieving user with id " + id})
-            })
-
-    }else{
-        utilisateur.find().populate(
-            {
-                path:"_id",
-                select :"-motDePasse"
-            }).select('-motDePasse')
-            .then(user => {
-                res.send(user)
+                res.send(data);
             })
             .catch(err => {
-                res.status(500).send({ message : err.message || "Error Occurred while retriving comment information" })
+                console.error("Erreur lors de la récupération de l'utilisateur:", err);
+                res.status(500).send({ message: "Erreur lors de la récupération de l'utilisateur avec l'ID " + id });
+            });
+    } else {
+        utilisateur.find()
+            .populate({
+                path: "_id",
+                select: "-motDePasse"
             })
+            .select('-motDePasse')
+            .then(users => {
+                res.send(users);
+            })
+            .catch(err => {
+                console.error("Erreur lors de la récupération des utilisateurs:", err);
+                res.status(500).send({ message: err.message || "Une erreur est survenue lors de la récupération des utilisateurs" });
+            });
     }
-
-    
 }
-//api update user
+
 exports.update = (req, res) => {
     if (!req.body) {
         return res.status(400).send({ message: "Les données à mettre à jour ne peuvent pas être vides" });
@@ -94,10 +76,9 @@ exports.update = (req, res) => {
         .then(data => {
             if (!data) {
                 return res.status(404).send({ message: `Impossible de mettre à jour l'utilisateur avec l'ID ${id}. L'utilisateur n'a peut-être pas été trouvé.` });
-            } else {
-                console.log("Utilisateur mis à jour:", data);
-                res.send(data);
             }
+            console.log("Utilisateur mis à jour:", data);
+            res.send(data);
         })
         .catch(err => {
             console.error("Erreur lors de la mise à jour de l'utilisateur:", err);
@@ -105,26 +86,23 @@ exports.update = (req, res) => {
         });
 };
 
-//delete user
-exports.delete = (req, res)=>{
+
+exports.delete = (req, res) => {
     const id = req.params.id;
 
     utilisateur.findByIdAndDelete(id)
         .then(data => {
-            if(!data){
-                res.status(404).send({ message : `Cannot Delete user with id ${id}. Maybe id is wrong`})
-            }else{
-                res.send({
-                    message : "user was deleted successfully!"
-                })
+            if (!data) {
+                return res.status(404).send({ message: `Impossible de supprimer l'utilisateur avec l'ID ${id}. L'ID peut être incorrect` });
             }
+            res.send({
+                message: "L'utilisateur a été supprimé avec succès!"
+            });
         })
-        .catch(err =>{
+        .catch(err => {
+            console.error("Erreur lors de la suppression de l'utilisateur:", err);
             res.status(500).send({
-                message: "user not delete comment with id=" + id
+                message: "Erreur lors de la suppression de l'utilisateur avec l'ID=" + id
             });
         });
-}
-
-
-
+};
